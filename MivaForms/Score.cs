@@ -66,22 +66,22 @@ namespace MivaForms
         }
         public static double CalculateTotal(
             Knapsack knapsack, 
-            double pechMax, 
-            double promMax, 
-            double stanMax, 
-            double pechDemand,
-            double promDemand,
-            double stanDemand,
+            ValuesTuple<double> baseMarketCapacity,
+            ValuesTuple<double> demand,
+            ValuesTuple<double> prices,
             AlgorithmType algorithmType,
             VariantType variantType)
         {
             ScoreFunction func = GetScoreFunction(algorithmType, variantType);
 
-            double pech = func(knapsack.Pech, pechMax) * pechDemand;
-            double prom = func(knapsack.Prom, promMax) * promDemand;
-            double stan = func(knapsack.Stan, stanMax) * stanDemand;
+            double salesTotal = prices.Pech * knapsack.Pech + prices.Prom * knapsack.Prom + prices.Stan * knapsack.Stan;
+            ValuesTuple<double> sales = new ValuesTuple<double>(prices.Pech * knapsack.Pech, prices.Prom * knapsack.Prom, prices.Stan * knapsack.Stan); 
 
-            return (pech + prom + stan) / (pechDemand + promDemand + stanDemand);
+            double pech = func(knapsack.Pech, baseMarketCapacity.Pech * demand.Pech);
+            double prom = func(knapsack.Prom, baseMarketCapacity.Prom * demand.Prom);
+            double stan = func(knapsack.Stan, baseMarketCapacity.Stan * demand.Stan);
+
+            return (pech + prom + stan) / (demand.Sum());
             //return pech + prom + stan;
         }
 

@@ -25,19 +25,24 @@ namespace MivaForms
 
         private void Main_Load(object sender, EventArgs e)
         {
+            //FormSerializer.Deserialise(this, Application.StartupPath + @"\serialise.xml");
+
+
             cmbScoreAlgo.Items.Clear();
             foreach(var v in Enum.GetNames(typeof(Score.AlgorithmType)))
             {
                 cmbScoreAlgo.Items.Add(v);
             }
-            cmbScoreAlgo.SelectedIndex = 0;
+            cmbScoreAlgo.SelectedIndex = (int)Score.AlgorithmType.Parabola;
 
             cmbScoreVariant.Items.Clear();
             foreach (var v in Enum.GetNames(typeof(Score.VariantType)))
             {
                 cmbScoreVariant.Items.Add(v);
             }
-            cmbScoreVariant.SelectedIndex = 0;
+            cmbScoreVariant.SelectedIndex = (int)Score.VariantType.Normal;
+
+            calculateActualMarketCapacity();
         }
 
         private void btnApplyFilter_Click(object sender, EventArgs e)
@@ -84,26 +89,30 @@ namespace MivaForms
             }
             else
             {
+                var marketCap = new ValuesTuple<double>((double)baseMarketPech.Value, (double)baseMarketProm.Value, (double)baseMarketStan.Value);
+                var demand = new ValuesTuple<double>((double)numDemandPech.Value, (double)numDemandProm.Value, (double)numDemandStan.Value);
+                var prices = new ValuesTuple<double>((double)numPricePech.Value, (double)numPriceProm.Value, (double)numPriceStan.Value);   
+
                 return Score.CalculateTotal(
                     knapsack,
-                    (double)marketCapPech.Value,
-                    (double)marketCapProm.Value,
-                    (double)marketCapStan.Value,
-                    (double)numDemandPech.Value,
-                    (double)numDemandProm.Value,
-                    (double)numDemandStan.Value,
+                    marketCap,
+                    demand,
+                    prices,
                     (Score.AlgorithmType)cmbScoreAlgo.SelectedIndex,
                     (Score.VariantType)cmbScoreVariant.SelectedIndex);
             }
         }
 
+        private void calculateActualMarketCapacity()
+        {
+            lblPechCap.Text = $"{Math.Floor((double)baseMarketPech.Value * (double)numDemandPech.Value)}";
+            lblPromCap.Text = $"{Math.Floor((double)baseMarketProm.Value * (double)numDemandProm.Value)}";
+            lblStanCap.Text = $"{Math.Floor((double)baseMarketStan.Value * (double)numDemandStan.Value)}";
+        }
+
         private void runEfficientProduction_Click(object sender, EventArgs e)
         {
             EfficientProduction ep = new EfficientProduction();
-
-            //ep.SetInitialStock(40, 20, 6, 7);
-            //ep.SetDemandMultipliers(0.8, 0.7, 0.8);
-            //ep.SetSalePrices(6000, 10000, 30000);
 
             ep.SetInitialStock(
                 (double)numStockPlastic.Value,
@@ -121,6 +130,8 @@ namespace MivaForms
                 (double)numPriceProm.Value,
                 (double)numPriceStan.Value);
 
+            var prices = new ValuesTuple<double>((double)numPricePech.Value, (double)numPriceProm.Value, (double)numPriceStan.Value);
+
             var results = ep.Run();
 
             DataTable table = new DataTable();
@@ -129,16 +140,19 @@ namespace MivaForms
                 new DataColumn("Pech", typeof(double)),
                 new DataColumn("Prom", typeof(double)),
                 new DataColumn("Stan", typeof(double)),
-                new DataColumn("Delta.Plastic", typeof(double)),
-                new DataColumn("Delta.Wood", typeof(double)),
-                new DataColumn("Delta.PlasticWorkshopHours", typeof(double)),
-                new DataColumn("Delta.WoodWorkshopHours", typeof(double)),
 
+                new DataColumn("D.P", typeof(double)),
+                new DataColumn("D.W", typeof(double)),
+                new DataColumn("D.PWH", typeof(double)),
+                new DataColumn("D.WWH", typeof(double)),
+
+                new DataColumn("SellPrice", typeof(double)),
             });
 
             foreach (var result in results)
             {
-                object[] values = new object[8];
+                var production = new ValuesTuple<double>(result.Pech, result.Prom, result.Stan);
+                object[] values = new object[9];
 
                 //values[0] = result.Score;
                 values[0] = CalculateScore(result);
@@ -151,10 +165,21 @@ namespace MivaForms
                 values[6] = Math.Round(result.Delta.PlasticWorkshopHours, 2);
                 values[7] = Math.Round(result.Delta.WoodWorkshopHours, 2);
 
+                values[8] = Math.Round( (production * prices).Sum(), 2);
+
                 table.Rows.Add(values);
             }
             
             dataGridView.DataSource = table;
+
+
+            //dataGridView.Columns.Add(new DataGridViewButtonColumn()
+            //{
+            //    Text = "Details",
+            //    UseColumnTextForButtonValue = true,
+            //    Name = "Details",
+            //    HeaderText = "Details"
+            //});
 
             var defaultGridView = (dataGridView.DataSource as DataTable).DefaultView;
             lblResultsCount.Text = $"{defaultGridView.Count} Production Variants";
@@ -204,6 +229,64 @@ namespace MivaForms
             File.WriteAllText("data/scoreFunctions.txt", sb.ToString());
 
             MessageBox.Show("Done");
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //FormSerializer.Serialise(this, Application.StartupPath + @"\serialise.xml");
+        }
+
+        private void demandOrCapacity_valueChanged(object sender, EventArgs e)
+        {
+            calculateActualMarketCapacity();
+        }
+
+        private void btnProductionCost_Click(object sender, EventArgs e)
+        {
+            var row = dataGridView.SelectedRows[0];
+            double pech = (double)row.Cells["Pech"].Value;
+            double prom = (double)row.Cells["Prom"].Value;
+            double stan = (double)row.Cells["Stan"].Value;
+
+            double wood = pech * Product.Pech.Wood + prom * Product.Prom.Wood + stan * Product.Stan.Wood;
+            double plastic = pech * Product.Pech.Plastic + prom * Product.Prom.Plastic + stan * Product.Stan.Plastic;
+            double woodWH = pech * Product.Pech.WoodWorkshopHours + prom * Product.Prom.WoodWorkshopHours + stan * Product.Stan.WoodWorkshopHours;
+            double plasticWH = pech * Product.Pech.PlasticWorkshopHours + prom * Product.Prom.PlasticWorkshopHours + stan * Product.Stan.PlasticWorkshopHours;
+
+            MessageBox.Show($"Plastic: {plastic}\nWood: {wood}\nPlasticWH: {plasticWH}\nWoodWH: {woodWH}\n");
+        }
+
+        private void addDynamicColumn_Click(object sender, EventArgs e)
+        {
+            string columnName = "Dynamic Column";
+            string columnFormula = "Pech + Prom + Stan";
+
+            Utils.ShowInputDialog(ref columnName);
+            Utils.ShowInputDialog(ref columnFormula);
+
+            var table = dataGridView.DataSource as DataTable;
+            table.Columns.Add(new DataColumn(columnName, typeof(double), columnFormula));
+        }
+
+        private void btnMaximizeStock_Click(object sender, EventArgs e)
+        {
+            double plasticWorkHours = (double)numStockPlasticRobots.Value * 200;
+            double woodWorkHours = (double)numStockWoodRobots.Value * 200;
+
+            double pechPlastic = plasticWorkHours / Product.Pech.PlasticWorkshopHours;
+            double promPlastic = plasticWorkHours / Product.Prom.PlasticWorkshopHours;
+            double stanPlastic = plasticWorkHours / Product.Stan.PlasticWorkshopHours;
+
+            double pechWood = woodWorkHours / Product.Pech.WoodWorkshopHours;
+            double promWood = woodWorkHours / Product.Prom.WoodWorkshopHours;
+            double stanWood = woodWorkHours / Product.Stan.WoodWorkshopHours;
+
+            double maxPlastic = Math.Max(stanWood, Math.Max(promWood, pechWood));
+            double maxWood = Math.Max(stanPlastic, Math.Max(promPlastic, pechPlastic));
+
+            numStockPlastic.Value = (decimal)maxPlastic;
+            numStockWood.Value = (decimal)maxWood;
+
         }
     }
 }

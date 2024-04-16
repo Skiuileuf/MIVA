@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<ChildForm>
+  <Control Type="System.Windows.Forms.StatusStrip" Name="statusStrip">
+    <Visible>True</Visible>
+  </Control>
+  <Control Type="System.Windows.Forms.SplitContainer" Name="splitContainer1">
+    <Visible>True</Visible>
+    <Control Type="System.Windows.Forms.FlowLayoutPanel" Name="flowLayoutPanel">
+      <Visible>True</Visible>
+      <Control Type="System.Windows.Forms.GroupBox" Name="groupBox1">
+        <Visible>True</Visible>
+        <Control Type="System.Windows.Forms.Button" Name="button1">
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numStockWoodRobots">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>7.00</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numStockPlasticRobots">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>6.00</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numStockWood">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>24.40</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numStockPlastic">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>48.80</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+      </Control>
+      <Control Type="System.Windows.Forms.GroupBox" Name="groupBox2">
+        <Visible>True</Visible>
+        <Control Type="System.Windows.Forms.Button" Name="btnOpenDemandData">
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.Button" Name="button2">
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numDemandStan">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>0.80</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numDemandProm">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>0.70</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numDemandPech">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>0.80</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+      </Control>
+      <Control Type="System.Windows.Forms.GroupBox" Name="groupBox3">
+        <Visible>True</Visible>
+        <Control Type="System.Windows.Forms.Button" Name="button3">
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numPriceStan">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>30000.00</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numPriceProm">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>10000.00</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="numPricePech">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>6000.00</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+      </Control>
+      <Control Type="System.Windows.Forms.GroupBox" Name="groupBox7">
+        <Visible>True</Visible>
+        <Control Type="System.Windows.Forms.Button" Name="button4">
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="marketCapStan">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>7.00</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="marketCapProm">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>45.00</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+        <Control Type="System.Windows.Forms.NumericUpDown" Name="marketCapPech">
+          <Visible>True</Visible>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownButtons" Name="">
+            <Visible>True</Visible>
+          </Control>
+          <Control Type="System.Windows.Forms.UpDownBase+UpDownEdit" Name="">
+            <Text>37.00</Text>
+            <Visible>True</Visible>
+          </Control>
+        </Control>
+      </Control>
+      <Control Type="System.Windows.Forms.GroupBox" Name="groupBox6">
+        <Visible>True</Visible>
+        <Control Type="System.Windows.Forms.ComboBox" Name="cmbScoreVariant">
+          <Text>Normal</Text>
+          <SelectedIndex>0</SelectedIndex>
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.ComboBox" Name="cmbScoreAlgo">
+          <Text>Sharkfin</Text>
+          <SelectedIndex>0</SelectedIndex>
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.Button" Name="button5">
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.Button" Name="runEfficientProduction">
+          <Visible>True</Visible>
+        </Control>
+      </Control>
+      <Control Type="System.Windows.Forms.GroupBox" Name="groupBox4">
+        <Visible>True</Visible>
+        <Control Type="System.Windows.Forms.TextBox" Name="txtFilter">
+          <Text />
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.Button" Name="btnApplyFilter">
+          <Visible>True</Visible>
+        </Control>
+      </Control>
+      <Control Type="System.Windows.Forms.GroupBox" Name="groupBox5">
+        <Visible>True</Visible>
+        <Control Type="System.Windows.Forms.TextBox" Name="txtSort">
+          <Text />
+          <Visible>True</Visible>
+        </Control>
+        <Control Type="System.Windows.Forms.Button" Name="btnApplySort">
+          <Visible>True</Visible>
+        </Control>
+      </Control>
+      <Control Type="System.Windows.Forms.GroupBox" Name="groupBox8">
+        <Visible>True</Visible>
+        <Control Type="System.Windows.Forms.Button" Name="btnTestAllScoreFunctions">
+          <Visible>True</Visible>
+        </Control>
+      </Control>
+    </Control>
+    <Control Type="System.Windows.Forms.DataGridView" Name="dataGridView">
+      <Visible>True</Visible>
+      <Control Type="System.Windows.Forms.HScrollBar" Name="">
+        <Visible>False</Visible>
+      </Control>
+      <Control Type="System.Windows.Forms.VScrollBar" Name="">
+        <Visible>False</Visible>
+      </Control>
+    </Control>
+  </Control>
+</ChildForm>

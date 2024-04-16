@@ -87,7 +87,8 @@ namespace LibMIVA.Algorithm
                                 Pech = i,
                                 Prom = j,
                                 Stan = k,
-                                Delta = new Product(deltaPlastic, deltaPlWH, deltaWood, deltaWoWH, "DELTA")
+                                Delta = new Product(deltaPlastic, deltaPlWH, deltaWood, deltaWoWH, "DELTA"),
+                                Cost = new Product(plasticUsage, plasticWHUsage, woodUsage, woodWHUsage, "COST")
                             };
                         }
                         //else

@@ -1,0 +1,7 @@
+C:\Users\Skiuileuf\source\repos\MIVA\MIVA\bin\Debug\MIVA.exe.config
+C:\Users\Skiuileuf\source\repos\MIVA\MIVA\bin\Debug\MIVA.exe
+C:\Users\Skiuileuf\source\repos\MIVA\MIVA\bin\Debug\MIVA.pdb
+C:\Users\Skiuileuf\source\repos\MIVA\MIVA\obj\Debug\MIVA.csproj.AssemblyReference.cache
+C:\Users\Skiuileuf\source\repos\MIVA\MIVA\obj\Debug\MIVA.csproj.CoreCompileInputs.cache
+C:\Users\Skiuileuf\source\repos\MIVA\MIVA\obj\Debug\MIVA.exe
+C:\Users\Skiuileuf\source\repos\MIVA\MIVA\obj\Debug\MIVA.pdb

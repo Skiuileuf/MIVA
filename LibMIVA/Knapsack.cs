@@ -15,6 +15,8 @@ namespace LibMIVA
 
         public Product Delta;
 
+        public Product Cost;
+
         public override string ToString()
         {
             return $"{Pech,2} Pech, {Prom,2} Prom, {Stan,2} Stan w/rem \t{Delta}";
