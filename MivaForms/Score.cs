@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MivaForms
 {
-    internal static class Score
+    public static class Score
     {
         public enum AlgorithmType
         {

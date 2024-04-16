@@ -23,13 +23,17 @@ namespace MivaForms
             InitializeComponent();
         }
 
+        public ValuesTuple<double> Prices;
+        public ValuesTuple<double> Demand;
+        public ValuesTuple<double> BaseMarket;
+
+        public Score.AlgorithmType AlgorithmType;
+        public Score.VariantType VariantType;
+
         private void Main_Load(object sender, EventArgs e)
         {
-            //FormSerializer.Deserialise(this, Application.StartupPath + @"\serialise.xml");
-
-
             cmbScoreAlgo.Items.Clear();
-            foreach(var v in Enum.GetNames(typeof(Score.AlgorithmType)))
+            foreach (var v in Enum.GetNames(typeof(Score.AlgorithmType)))
             {
                 cmbScoreAlgo.Items.Add(v);
             }
@@ -52,7 +56,8 @@ namespace MivaForms
                 var defaultGridView = (dataGridView.DataSource as DataTable).DefaultView;
                 defaultGridView.RowFilter = txtFilter.Text;
                 lblResultsCount.Text = $"{defaultGridView.Count} Production Variants";
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -78,39 +83,53 @@ namespace MivaForms
             System.Diagnostics.Process.Start("https://www.csharp-examples.net/dataview-rowfilter/");
         }
 
-        private double CalculateScore(Knapsack knapsack)
+        private void GrabValuesFromForm()
         {
-            if (cmbScoreAlgo.SelectedIndex == (int)Score.AlgorithmType.Old)
+            try
             {
-                return  (double)numPricePech.Value * (double)numDemandPech.Value * knapsack.Pech * 1 +
-                        (double)numPriceProm.Value * (double)numDemandProm.Value * knapsack.Prom * 1 +
-                        (double)numPriceStan.Value * (double)numDemandStan.Value * knapsack.Stan * 0.5;
+                Prices = new ValuesTuple<double>((double)numPricePech.Value, (double)numPriceProm.Value, (double)numPriceStan.Value);
+                Demand = new ValuesTuple<double>((double)numDemandPech.Value, (double)numDemandProm.Value, (double)numDemandStan.Value);
+                BaseMarket = new ValuesTuple<double>((double)numBasePech.Value, (double)numBaseProm.Value, (double)numBaseStan.Value);
 
+                AlgorithmType = (Score.AlgorithmType)cmbScoreAlgo.SelectedIndex;
+                VariantType = (Score.VariantType)cmbScoreVariant.SelectedIndex;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private double CalculateScore(Knapsack knapsack, Score.AlgorithmType algorithmType, Score.VariantType variantType)
+        {
+            var production = new ValuesTuple<double>(knapsack.Pech, knapsack.Prom, knapsack.Stan);
+            var oldAlgoWeights = new ValuesTuple<double>(1, 1, 0.5);
+
+            if (algorithmType == Score.AlgorithmType.Old)
+            {
+                return (production * Prices * oldAlgoWeights).Sum();
             }
             else
             {
-                var marketCap = new ValuesTuple<double>((double)baseMarketPech.Value, (double)baseMarketProm.Value, (double)baseMarketStan.Value);
-                var demand = new ValuesTuple<double>((double)numDemandPech.Value, (double)numDemandProm.Value, (double)numDemandStan.Value);
-                var prices = new ValuesTuple<double>((double)numPricePech.Value, (double)numPriceProm.Value, (double)numPriceStan.Value);   
-
                 return Score.CalculateTotal(
                     knapsack,
-                    marketCap,
-                    demand,
-                    prices,
-                    (Score.AlgorithmType)cmbScoreAlgo.SelectedIndex,
-                    (Score.VariantType)cmbScoreVariant.SelectedIndex);
+                    BaseMarket,
+                    Demand,
+                    Prices,
+                    algorithmType,
+                    variantType
+                );
             }
         }
 
         private void calculateActualMarketCapacity()
         {
-            lblPechCap.Text = $"{Math.Floor((double)baseMarketPech.Value * (double)numDemandPech.Value)}";
-            lblPromCap.Text = $"{Math.Floor((double)baseMarketProm.Value * (double)numDemandProm.Value)}";
-            lblStanCap.Text = $"{Math.Floor((double)baseMarketStan.Value * (double)numDemandStan.Value)}";
+            lblPechCap.Text = $"{Math.Floor((double)numBasePech.Value * (double)numDemandPech.Value)}";
+            lblPromCap.Text = $"{Math.Floor((double)numBaseProm.Value * (double)numDemandProm.Value)}";
+            lblStanCap.Text = $"{Math.Floor((double)numBaseStan.Value * (double)numDemandStan.Value)}";
         }
 
-        private void runEfficientProduction_Click(object sender, EventArgs e)
+        private void runEfficientProductionAndDisplayData()
         {
             EfficientProduction ep = new EfficientProduction();
 
@@ -118,71 +137,113 @@ namespace MivaForms
                 (double)numStockPlastic.Value,
                 (double)numStockWood.Value,
                 (double)numStockPlasticRobots.Value,
-                (double)numStockWoodRobots.Value );
-
+                (double)numStockWoodRobots.Value);
+            
             ep.SetDemandMultipliers(
-                (double)numDemandPech.Value,
-                (double)numDemandProm.Value,
-                (double)numDemandStan.Value);
+                Demand.Pech,
+                Demand.Prom,
+                Demand.Stan);
 
             ep.SetSalePrices(
-                (double)numPricePech.Value,
-                (double)numPriceProm.Value,
-                (double)numPriceStan.Value);
+                Prices.Pech,
+                Prices.Prom,
+                Prices.Stan);
 
-            var prices = new ValuesTuple<double>((double)numPricePech.Value, (double)numPriceProm.Value, (double)numPriceStan.Value);
+            var results = new List<Knapsack>();
 
-            var results = ep.Run();
+            BackgroundWorker worker = new BackgroundWorker();
+            prgVariantGeneration.Value = 100;
 
             DataTable table = new DataTable();
-            table.Columns.AddRange(new DataColumn[] {
-                new DataColumn("Score", typeof(double) ),
-                new DataColumn("Pech", typeof(double)),
-                new DataColumn("Prom", typeof(double)),
-                new DataColumn("Stan", typeof(double)),
 
-                new DataColumn("D.P", typeof(double)),
-                new DataColumn("D.W", typeof(double)),
-                new DataColumn("D.PWH", typeof(double)),
-                new DataColumn("D.WWH", typeof(double)),
-
-                new DataColumn("SellPrice", typeof(double)),
-            });
-
-            foreach (var result in results)
+            worker.DoWork += (s, args) =>
             {
-                var production = new ValuesTuple<double>(result.Pech, result.Prom, result.Stan);
-                object[] values = new object[9];
+                results = ep.Run();
 
-                //values[0] = result.Score;
-                values[0] = CalculateScore(result);
-                values[1] = result.Pech;
-                values[2] = result.Prom;
-                values[3] = result.Stan;
+                table.Columns.AddRange(new DataColumn[] {
+                    new DataColumn("Score", typeof(double) ),
+                    new DataColumn("Pech", typeof(double)),
+                    new DataColumn("Prom", typeof(double)),
+                    new DataColumn("Stan", typeof(double)),
 
-                values[4] = Math.Round(result.Delta.Plastic, 2);
-                values[5] = Math.Round(result.Delta.Wood, 2);
-                values[6] = Math.Round(result.Delta.PlasticWorkshopHours, 2);
-                values[7] = Math.Round(result.Delta.WoodWorkshopHours, 2);
+                    new DataColumn("D.P", typeof(double)),
+                    new DataColumn("D.W", typeof(double)),
+                    new DataColumn("D.PWH", typeof(double)),
+                    new DataColumn("D.WWH", typeof(double)),
 
-                values[8] = Math.Round( (production * prices).Sum(), 2);
+                    new DataColumn("SellPrice", typeof(double)),
+                });
 
-                table.Rows.Add(values);
-            }
-            
-            dataGridView.DataSource = table;
+                foreach (var result in results)
+                {
+                    var production = new ValuesTuple<double>(result.Pech, result.Prom, result.Stan);
+                    object[] values = new object[9];
+
+                    //values[0] = result.Score;
+                    values[0] = CalculateScore(result, AlgorithmType, VariantType);
+                    values[1] = result.Pech;
+                    values[2] = result.Prom;
+                    values[3] = result.Stan;
+
+                    values[4] = Math.Round(result.Delta.Plastic, 2);
+                    values[5] = Math.Round(result.Delta.Wood, 2);
+                    values[6] = Math.Round(result.Delta.PlasticWorkshopHours, 2);
+                    values[7] = Math.Round(result.Delta.WoodWorkshopHours, 2);
+
+                    values[8] = Math.Round((production * Prices).Sum(), 2);
+
+                    table.Rows.Add(values);
+                }
+
+               
+            };
+
+            worker.RunWorkerCompleted += (s, args) =>
+            {
+                prgVariantGeneration.Value = 0;
+
+                dataGridView.DataSource = table;
 
 
-            //dataGridView.Columns.Add(new DataGridViewButtonColumn()
+                //dataGridView.Columns.Add(new DataGridViewButtonColumn()
+                //{
+                //    Text = "Details",
+                //    UseColumnTextForButtonValue = true,
+                //    Name = "Details",
+                //    HeaderText = "Details"
+                //});
+
+                var defaultGridView = (dataGridView.DataSource as DataTable).DefaultView;
+                lblResultsCount.Text = $"{defaultGridView.Count} Production Variants";
+            };
+
+            worker.RunWorkerAsync();
+
+            //var results = ep.Run();
+
+
+        }
+
+        private void runEfficientProduction_Click(object sender, EventArgs e)
+        {
+            GrabValuesFromForm();
+            //BackgroundWorker worker = new BackgroundWorker();
+
+            //prgVariantGeneration.Value = 0;
+
+            //worker.DoWork += (s, args) =>
             //{
-            //    Text = "Details",
-            //    UseColumnTextForButtonValue = true,
-            //    Name = "Details",
-            //    HeaderText = "Details"
-            //});
+            //    runEfficientProductionAndDisplayData();
+            //};
+            runEfficientProductionAndDisplayData();
+            //worker.RunWorkerCompleted += (s, args) =>
+            //{
+            //    prgVariantGeneration.Value = 100;
+            //};
 
-            var defaultGridView = (dataGridView.DataSource as DataTable).DefaultView;
-            lblResultsCount.Text = $"{defaultGridView.Count} Production Variants";
+            //worker.RunWorkerAsync();
+
+
         }
 
         private void btnOpenDemandData_Click(object sender, EventArgs e)

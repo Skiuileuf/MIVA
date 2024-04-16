@@ -52,13 +52,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.baseMarketStan = new System.Windows.Forms.NumericUpDown();
+            this.numBaseStan = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.label11 = new System.Windows.Forms.Label();
-            this.baseMarketProm = new System.Windows.Forms.NumericUpDown();
+            this.numBaseProm = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
-            this.baseMarketPech = new System.Windows.Forms.NumericUpDown();
+            this.numBasePech = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
@@ -91,12 +91,14 @@
             this.txtSort = new System.Windows.Forms.TextBox();
             this.btnApplySort = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.btnMaximizeStock = new System.Windows.Forms.Button();
             this.addDynamicColumn = new System.Windows.Forms.Button();
             this.btnProductionCost = new System.Windows.Forms.Button();
             this.btnTestAllScoreFunctions = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblResultsCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnMaximizeStock = new System.Windows.Forms.Button();
+            this.prgVariantGeneration = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -113,11 +115,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numDemandProm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDemandPech)).BeginInit();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.baseMarketStan)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBaseStan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.baseMarketProm)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBaseProm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.baseMarketPech)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBasePech)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox9.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -444,13 +446,13 @@
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.button4);
-            this.groupBox7.Controls.Add(this.baseMarketStan);
+            this.groupBox7.Controls.Add(this.numBaseStan);
             this.groupBox7.Controls.Add(this.numericUpDown3);
             this.groupBox7.Controls.Add(this.label11);
-            this.groupBox7.Controls.Add(this.baseMarketProm);
+            this.groupBox7.Controls.Add(this.numBaseProm);
             this.groupBox7.Controls.Add(this.numericUpDown2);
             this.groupBox7.Controls.Add(this.label12);
-            this.groupBox7.Controls.Add(this.baseMarketPech);
+            this.groupBox7.Controls.Add(this.numBasePech);
             this.groupBox7.Controls.Add(this.numericUpDown1);
             this.groupBox7.Controls.Add(this.label13);
             this.groupBox7.Location = new System.Drawing.Point(441, 3);
@@ -471,22 +473,22 @@
             // 
             // baseMarketStan
             // 
-            this.baseMarketStan.DecimalPlaces = 2;
-            this.baseMarketStan.Location = new System.Drawing.Point(67, 62);
-            this.baseMarketStan.Maximum = new decimal(new int[] {
+            this.numBaseStan.DecimalPlaces = 2;
+            this.numBaseStan.Location = new System.Drawing.Point(67, 62);
+            this.numBaseStan.Maximum = new decimal(new int[] {
             1410065408,
             2,
             0,
             0});
-            this.baseMarketStan.Name = "baseMarketStan";
-            this.baseMarketStan.Size = new System.Drawing.Size(129, 20);
-            this.baseMarketStan.TabIndex = 5;
-            this.baseMarketStan.Value = new decimal(new int[] {
+            this.numBaseStan.Name = "baseMarketStan";
+            this.numBaseStan.Size = new System.Drawing.Size(129, 20);
+            this.numBaseStan.TabIndex = 5;
+            this.numBaseStan.Value = new decimal(new int[] {
             7,
             0,
             0,
             0});
-            this.baseMarketStan.ValueChanged += new System.EventHandler(this.demandOrCapacity_valueChanged);
+            this.numBaseStan.ValueChanged += new System.EventHandler(this.demandOrCapacity_valueChanged);
             // 
             // numericUpDown3
             // 
@@ -513,22 +515,22 @@
             // 
             // baseMarketProm
             // 
-            this.baseMarketProm.DecimalPlaces = 2;
-            this.baseMarketProm.Location = new System.Drawing.Point(67, 40);
-            this.baseMarketProm.Maximum = new decimal(new int[] {
+            this.numBaseProm.DecimalPlaces = 2;
+            this.numBaseProm.Location = new System.Drawing.Point(67, 40);
+            this.numBaseProm.Maximum = new decimal(new int[] {
             1410065408,
             2,
             0,
             0});
-            this.baseMarketProm.Name = "baseMarketProm";
-            this.baseMarketProm.Size = new System.Drawing.Size(129, 20);
-            this.baseMarketProm.TabIndex = 3;
-            this.baseMarketProm.Value = new decimal(new int[] {
+            this.numBaseProm.Name = "baseMarketProm";
+            this.numBaseProm.Size = new System.Drawing.Size(129, 20);
+            this.numBaseProm.TabIndex = 3;
+            this.numBaseProm.Value = new decimal(new int[] {
             76,
             0,
             0,
             0});
-            this.baseMarketProm.ValueChanged += new System.EventHandler(this.demandOrCapacity_valueChanged);
+            this.numBaseProm.ValueChanged += new System.EventHandler(this.demandOrCapacity_valueChanged);
             // 
             // numericUpDown2
             // 
@@ -555,22 +557,22 @@
             // 
             // baseMarketPech
             // 
-            this.baseMarketPech.DecimalPlaces = 2;
-            this.baseMarketPech.Location = new System.Drawing.Point(67, 18);
-            this.baseMarketPech.Maximum = new decimal(new int[] {
+            this.numBasePech.DecimalPlaces = 2;
+            this.numBasePech.Location = new System.Drawing.Point(67, 18);
+            this.numBasePech.Maximum = new decimal(new int[] {
             1410065408,
             2,
             0,
             0});
-            this.baseMarketPech.Name = "baseMarketPech";
-            this.baseMarketPech.Size = new System.Drawing.Size(129, 20);
-            this.baseMarketPech.TabIndex = 1;
-            this.baseMarketPech.Value = new decimal(new int[] {
+            this.numBasePech.Name = "baseMarketPech";
+            this.numBasePech.Size = new System.Drawing.Size(129, 20);
+            this.numBasePech.TabIndex = 1;
+            this.numBasePech.Value = new decimal(new int[] {
             64,
             0,
             0,
             0});
-            this.baseMarketPech.ValueChanged += new System.EventHandler(this.demandOrCapacity_valueChanged);
+            this.numBasePech.ValueChanged += new System.EventHandler(this.demandOrCapacity_valueChanged);
             // 
             // numericUpDown1
             // 
@@ -964,6 +966,16 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Debug";
             // 
+            // btnMaximizeStock
+            // 
+            this.btnMaximizeStock.Location = new System.Drawing.Point(6, 98);
+            this.btnMaximizeStock.Name = "btnMaximizeStock";
+            this.btnMaximizeStock.Size = new System.Drawing.Size(190, 23);
+            this.btnMaximizeStock.TabIndex = 11;
+            this.btnMaximizeStock.Text = "Maximizeaza materiale dupa roboti";
+            this.btnMaximizeStock.UseVisualStyleBackColor = true;
+            this.btnMaximizeStock.Click += new System.EventHandler(this.btnMaximizeStock_Click);
+            // 
             // addDynamicColumn
             // 
             this.addDynamicColumn.Location = new System.Drawing.Point(6, 73);
@@ -997,7 +1009,9 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblResultsCount});
+            this.lblResultsCount,
+            this.toolStripStatusLabel1,
+            this.prgVariantGeneration});
             this.statusStrip.Location = new System.Drawing.Point(0, 574);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1135, 22);
@@ -1011,15 +1025,17 @@
             this.lblResultsCount.Size = new System.Drawing.Size(119, 17);
             this.lblResultsCount.Text = "0 Production Variants";
             // 
-            // btnMaximizeStock
+            // prgVariantGeneration
             // 
-            this.btnMaximizeStock.Location = new System.Drawing.Point(6, 98);
-            this.btnMaximizeStock.Name = "btnMaximizeStock";
-            this.btnMaximizeStock.Size = new System.Drawing.Size(190, 23);
-            this.btnMaximizeStock.TabIndex = 11;
-            this.btnMaximizeStock.Text = "Maximizeaza materiale dupa roboti";
-            this.btnMaximizeStock.UseVisualStyleBackColor = true;
-            this.btnMaximizeStock.Click += new System.EventHandler(this.btnMaximizeStock_Click);
+            this.prgVariantGeneration.Name = "prgVariantGeneration";
+            this.prgVariantGeneration.Size = new System.Drawing.Size(100, 16);
+            this.prgVariantGeneration.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(899, 17);
+            this.toolStripStatusLabel1.Spring = true;
             // 
             // Main
             // 
@@ -1051,11 +1067,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numDemandPech)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.baseMarketStan)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBaseStan)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.baseMarketProm)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBaseProm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.baseMarketPech)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBasePech)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
@@ -1124,11 +1140,11 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.NumericUpDown baseMarketStan;
+        private System.Windows.Forms.NumericUpDown numBaseStan;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.NumericUpDown baseMarketProm;
+        private System.Windows.Forms.NumericUpDown numBaseProm;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.NumericUpDown baseMarketPech;
+        private System.Windows.Forms.NumericUpDown numBasePech;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cmbScoreAlgo;
@@ -1149,6 +1165,8 @@
         private System.Windows.Forms.Button btnProductionCost;
         private System.Windows.Forms.Button addDynamicColumn;
         private System.Windows.Forms.Button btnMaximizeStock;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripProgressBar prgVariantGeneration;
     }
 }
 

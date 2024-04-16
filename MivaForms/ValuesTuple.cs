@@ -71,5 +71,6 @@ namespace MivaForms
         {
             return HashCode.Combine(Pech, Prom, Stan);
         }
+
     }
 }
